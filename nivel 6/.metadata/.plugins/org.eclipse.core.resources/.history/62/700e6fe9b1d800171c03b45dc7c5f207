@@ -1,0 +1,168 @@
+package uniandes.cupi2.explorador.interfaz;
+
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import uniandes.cupi2.explorador.mundo.Casilla;
+import uniandes.cupi2.explorador.mundo.Casilla.Tipo;
+import uniandes.cupi2.explorador.mundo.ExploradorCuevas;
+
+
+
+@SuppressWarnings("serial")
+public class PanelCueva extends JPanel  {
+	
+	
+	 // -----------------------------------------------------------------
+    // Atributos
+    // -----------------------------------------------------------------
+
+    /**
+     * Es una referencia a la clase principal de la interfaz.
+     */
+    private InterfazExplorador principal;
+
+    // -----------------------------------------------------------------
+    // Atributos de Interfaz
+    // -----------------------------------------------------------------
+
+    /**
+     * Botones de las casillas.
+     */
+    private JLabel[][] imagenesCasillas;
+
+    /**
+     * Ancho de la visualización actual.
+     */
+    private int ancho;
+
+    /**
+     * Alto de la visualización actual.
+     */
+    private int alto;
+    
+    
+    /**
+     * Construye el panel como una grilla del tamaño del campo minado.
+     * @param pPrincipal Referencia a la ventana principal. pPrincipal != null.
+     * @param pColumnas número de columnas del panel.
+     * @param pFilas número de filas del panel.
+     */
+    public PanelCueva( InterfazExplorador pPrincipal)
+    {
+        principal = pPrincipal;
+
+    }
+    
+    // -----------------------------------------------------------------
+    // Métodos
+    // -----------------------------------------------------------------
+
+    /**
+     * Inicializa la matriz de botones.
+     */
+    public void inicializar( int pFilas, int pColumnas  )
+    {
+    	alto = pFilas;
+    	ancho = pColumnas;
+   
+        setLayout( new GridLayout( alto, ancho ) );
+        imagenesCasillas = new JLabel[alto][ancho];
+
+
+        Font fuente = new Font( "Tahoma", Font.PLAIN, 10 );
+
+        for( int i = 0; i < alto; i++ )
+        {
+            for( int j = 0; j < ancho; j++ )
+            {
+
+                imagenesCasillas[ i ][ j ] = new JLabel( );
+                imagenesCasillas[ i ][ j ].setFont( fuente );
+                add( imagenesCasillas[ i ][ j ] );
+
+            }
+
+        }
+
+    }
+    
+    
+    /**
+     * Actualiza la visualización del campo minado.
+     * @param pExplorador El la cueva a mostrar..
+     */
+    public void actualizar(ExploradorCuevas  pExplorador )
+    {
+        Casilla[][] casillas = pExplorador.darCasillas();
+        
+        for( int i = 0; i < pExplorador.darFilas( ); i++ )
+        {
+            for( int j = 0; j < pExplorador.darColumnas( ); j++ )
+            {
+                JLabel label = imagenesCasillas[ i ][ j ];
+
+               
+                if( casillas[ i ][ j ].darEstado( ) == Tipo.BOMBA )
+                {
+                    label.setText( "" );
+                    label.setEnabled( true );
+                    label.setIcon( new ImageIcon( new ImageIcon( casillas[ i ][ j ].darImagen( ) ).getImage( ).getScaledInstance( 45, 45, Image.SCALE_DEFAULT ) ) );
+                }
+               
+                else if( casillas[ i ][ j ].darValor( ) == Tipo.BOMBA && principal.darEstadoJuego( ) == EstadoJuego.JUEGO_PERDIDO )
+                {
+                	label.setText( "" );
+                	label.setEnabled( true );
+                	label.setIcon( new ImageIcon( new ImageIcon( casillas[ i ][ j ].darImagen( ) ).getImage( ).getScaledInstance( 45, 45, Image.SCALE_DEFAULT ) ) );
+                }
+               
+                else if( casillas[ i ][ j ].darEstado( ) == Tipo.ILUMINADA )
+                {
+                	label.setText( "" );
+                	label.setEnabled( true );
+                	label.setIcon( new ImageIcon( new ImageIcon( casillas[ i ][ j ].darImagen( ) ).getImage( ).getScaledInstance( 45, 45, Image.SCALE_DEFAULT ) ) );
+                }
+                
+                
+                else if( casillas[ i ][ j ].darEstado( ) == Tipo.LIBRE )
+                {
+                	label.setText( "" );
+                	label.setEnabled( true );
+                	
+                	label.setIcon( new ImageIcon( new ImageIcon( casillas[ i ][ j ].darImagen( ) ).getImage( ).getScaledInstance( 45, 45, Image.SCALE_DEFAULT ) ) );
+                }
+                else if ( casillas[ i ][ j ].darEstado() == Tipo.JUGADOR)
+                {
+                	label.setText( "" );
+                	label.setEnabled( true );
+                	
+                	label.setIcon( new ImageIcon( new ImageIcon( casillas[ i ][ j ].darImagen( ) ).getImage( ).getScaledInstance( 45, 45, Image.SCALE_DEFAULT ) ) );
+                }
+                else if ( casillas[ i ][ j ].darEstado() == Tipo.OBSTACULO)
+                {
+                	label.setText( "" );
+                	label.setEnabled( true );
+                	
+                	label.setIcon( new ImageIcon( new ImageIcon( casillas[ i ][ j ].darImagen( ) ).getImage( ).getScaledInstance( 45, 45, Image.SCALE_DEFAULT ) ) );
+                }
+                else if ( casillas[ i ][ j ].darEstado() == Tipo.TESORO)
+                {
+                	label.setText( "" );
+                	label.setEnabled( true );
+                	
+                	label.setIcon( new ImageIcon( new ImageIcon( casillas[ i ][ j ].darImagen( ) ).getImage( ).getScaledInstance( 45, 45, Image.SCALE_DEFAULT ) ) );
+                }
+            }
+        }
+
+    }
+}

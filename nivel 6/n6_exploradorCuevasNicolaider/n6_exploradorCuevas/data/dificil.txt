@@ -1,0 +1,13 @@
+explorador.movimientos=30
+explorador.filas=10
+explorador.columnas=10
+explorador.fila0=ONNNNBBBTO
+explorador.fila1=ONNNNNNNJO
+explorador.fila2=OBNNNNNNNO
+explorador.fila3=OBNNNBBBBO
+explorador.fila4=OBNNNNNNBO
+explorador.fila5=ONNNNNBBBO
+explorador.fila6=OOOOOBBNNO
+explorador.fila7=ONBNBBBNNO
+explorador.fila8=ONNBNNNNBO
+explorador.fila9=OOOOOOOOOO

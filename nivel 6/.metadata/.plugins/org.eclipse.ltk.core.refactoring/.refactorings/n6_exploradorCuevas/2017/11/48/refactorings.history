@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;n6_exploradorCuevas&apos;&#x0D;&#x0A;- Original project: &apos;n6_exploradorCuevas&apos;&#x0D;&#x0A;- Original element: &apos;n6_exploradorCuevas/source/Casilla.java&apos;" description="Delete element" element1="/source&lt;Casilla.java" element2="/source&lt;Casilla" elements="2" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1511898257938" subPackages="false" version="1.0"/>
+</session>

@@ -1,0 +1,95 @@
+package uniandes.cupi2.explorador.interfaz;
+
+import java.awt.BorderLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import uniandes.cupi2.explorador.mundo.ExploradorCuevas;
+
+/**
+ * Esta es la clase principal de la interfaz del Explorador.
+ */
+@SuppressWarnings("serial")
+public class InterfazExplorador extends JFrame {
+	
+	 //
+     // Constantes
+     // 
+
+public final static int MODO_MOVERSE = 0;
+	
+    /**
+     * Ruta del archivo de donde se carga el juego.
+     */
+    public final static String RUTA_ARCHIVO = "./data/explorador.properties";
+    
+    
+    // -----------------------------------------------------------------
+    // Atributos
+    // -----------------------------------------------------------------
+
+    /**
+     * Es el modo actual de juego. Según el modo cambia la acción que se realiza cuando se hace click sobre el campo minado.
+     */
+    private int modoActual;
+
+    /**
+     * Es el campo de la cueva sobre el que se está jugando.
+     */
+    private ExploradorCuevas campoCueva;
+
+    /**
+     * Es el panel donde se muestra la barra de estado del juego.
+     */
+    private PanelMovimientos panelMovimientos;
+
+    /**
+     * Es el panel donde se muestran las opciones del programa.
+     */
+    private PanelOpciones panelOpciones;
+    
+
+    /**
+     * Es el panel donde se muestran los botones para controlar el juego.
+     */
+    private PanelControles panelControles;
+
+    /**
+     * Es el panel donde se muestra el estado actual del juego.
+     */
+    private PanelCueva panelCueva;
+
+    /**
+     * Es el panel donde se muestra la barra de estado del juego.
+     */
+    private PanelInformacion panelInformacion;
+
+//  -----------------------------------------------------------------
+    // Constructores
+    // -----------------------------------------------------------------
+
+    /**
+     * Construye la interfaz de la aplicación.
+     */
+    public InterfazExplorador( )
+    {
+
+        setTitle( "Explorador de Cuevas" );
+        setSize( 800, 700 );
+        setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        setResizable( false );
+        setLocationRelativeTo( null );
+        
+        
+        modoActual = MODO_MOVERSE;
+
+        JLabel labImagen = new JLabel( new ImageIcon( "./data/imagenes/banner.png" ) );
+        add( labImagen, BorderLayout.NORTH );
+
+
+	
+
+    }
+}

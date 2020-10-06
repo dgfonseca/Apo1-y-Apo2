@@ -1,0 +1,110 @@
+/**
+     * Avanza un día en el parqueadero y se abre el parqueadero.
+     * <b>pre: </b> El parqueadero se encuentra cerrado. <br>
+     * <b>post: </b> Se abre el parqueadero y se aplica la tarifa nocturna a los carros. <br>
+     */
+    public void siguienteDia( )
+    {
+        horaActual = HORA_INICIAL;
+        abierto = true;
+        for(int i = 0; i < carros.size( ); i++)
+        {
+            Carro carro = carros.get( i );
+            carro.avanzarDia( );
+        }
+        verificarInvariante( );
+    }
+
+/**
+     * Retorna un mensaje con la placa del carro que se encuentra en la posición indicada.
+     * @param pPosicion Posición del carro. pPosicion >= 0 && pPosicion < puestos.length.
+     * @return Mensaje con la placa. 
+     * @throws PlacaException En caso de que el puesto esté vacío y no haya placa para retornar.
+     */
+    public String darPlacaCarro( int pPosicion ) throws PlacaException
+
+/**
+     * Ingresa un carro al parqueadero. <br>
+     * <b>pre: </b> La lista de carros y la lista de puestos están inicializadas. <br>
+     * <b>post: </b>El carro fue ingresado y agregado a la lista de carros.
+     * @param pPlaca Placa del carro que ingresa. pPlaca != null && pPlaca != "".
+     * @param pHora Hora de ingreso. pHora >= HORA_INICIAL && pHora < HORA_CIERRE.
+     * @param pMarca Marca del carro. pMarca != null && pMarca != "".
+     * @param pModelo Modelo del carro. != null && pModelo != "".
+     * @return Puesto en el que fue parqueado el carro. <br>
+     * @throws EstadoParqueaderoException Si el parqueadero se encuentra cerrado o si no hay puestos libres en el parqueadero. <br>
+     * @throws PlacaException Si ya existe un carro en el parqueadero con la placa especificada.
+     */
+    public int ingresarCarro( String pPlaca, String pMarca, String pModelo ) throws EstadoParqueaderoException, PlacaException
+
+/**
+     * Saca un carro del parqueadero e informa la cantidad de dinero que debe pagar. <br>
+     * <b>pre: </b> La lista de puestos y la lista de carros están inicializadas. El carro con la placa especificada existe.<br>
+     * <b>post: </b> El puesto fue desocupado y el carro salió del parqueadero.
+     * @param pPlaca Placa del carro que va a salir. pPlaca != null && pPlaca != "".
+     * @return El valor a pagar.
+     * @throws EstadoParqueaderoException Si el parqueadero se encuentra cerrado.
+     */
+    public int sacarCarro( String pPlaca ) throws EstadoParqueaderoException
+
+/**
+     * Busca un puesto libre en el parqueadero y lo retorna.
+     * @return Número del puesto libre encontrado.
+     * @throws Exception Si no hay ningún puesto libre en el parqueadero.
+     */
+    private int buscarPuestoLibre( ) throws Exception
+
+/**
+     * Busca un carro por su placa en la lista de carros.
+     * @param pPlaca Placa del carro buscado. pPlaca != null && pPlaca != "".
+     * @return Carro buscado.
+     * @throws PlacaException Si no se encontró ningún carro por la placa especificada.
+     */
+    public Carro buscarCarroPorPlaca( String pPlaca ) throws PlacaException
+
+/**
+     * Guarda el estado del sistema en un archivo serializado. <br>
+     * <b>post: </b> Se guardó la lista de puestos, la lista de carros, la hora actual, la tarifa y el valor en caja en el archivo dado. <br>
+     * @param pRuta Ruta del archivo donde se guarda el estado del sistema. pRuta != null && pRuta != "".
+     * @throws PersistenciaException Se lanza una excepción si hay algún error guardando los datos del archivo.
+     */
+    public void guardar( String pRuta ) throws PersistenciaException
+
+/**
+     * Carga el estado del sistema de un archivo serializado. <br>
+     * <b>post: </b> Se inicializó la lista de puestos y de carros a partir del archivo dado. Se inicializaron igualmente la hora actual, la tarifa y el valor en caja a partir del archivo.<br>
+     * @param pArchivo Archivo con la información del sistema. pArchivo != null.
+     * @throws PersistenciaException Se lanza una excepción si hay algún error cargando los datos del archivo.
+     */
+    public void cargar( String pArchivo ) throws PersistenciaException
+
+/**
+     * Carga el estado del sistema de un archivo de texto, agregando cada 5 carros con una hora de diferencia. <br>
+     * <b>post: </b> Se carga la información de la tarifa, el valor en caja y se ingresan los carros que se encuentran en el archivo, cada 5 carros avanzando una hora, la hora inicial siendo las 6 de la mañana. <br>
+     * @param pNombreArchivo Archivo con la información del sistema. pNombreArchivo != null.
+     * @throws PersistenciaException Se lanza una excepción si hay algún error cargando los datos del archivo.
+     * @throws FormatoArchivoException Si el formato del archivo es erróneo y no puede ser leído.
+     * @throws EstadoParqueaderoException Si la cantidad de carros del archivo exceden el cupo actual del parqueadero o si el parqueadero se encuentra cerrado.
+     * @throws PlacaException Si alguna de los carros a ingresar tiene una placa que ya se encuentra en el parqueadero.
+     */
+    public void importarArchivoTexto( File pNombreArchivo ) throws PersistenciaException, FormatoArchivoException, EstadoParqueaderoException, PlacaException
+    
+/**
+     * Genera un reporte con las ganancias estimadas en la hora actual si todos los carros fueran sacados. <br>
+     * <b>post: </b> El reporte de las ganancias estimadas fue generado. <br>
+     * @param pRuta Ruta donde se desea guardar el archivo con el reporte. pRuta != null && pRutal != "".
+     * @throws PersistenciaException Se lanza una excepción si hay un error en la generación del reporte.
+     */
+    public void generarReporte( String pRuta ) throws PersistenciaException
+
+/**
+     * Construye el parqueadero con su estado a partir de un archivo serializado. <br>
+     * <b>post: </b> Se cargó el estado del parqueadero con la información del archivo dado por parámetro. <br>
+     * Si hay algún problema cargando el archivo, lanza excepción. <br>
+     * Si no existe el archivo seralizado, crea la lista de carros vacía y configura la lista puestos vacíos.
+     * @param pRuta Ruta del archivo del cual se cargará el estado del mundo.
+     * @throws PersistenciaException Se lanza una excepción si hay algún error cargando los datos del archivo.
+     */
+    public Parqueadero( String pRuta ) throws PersistenciaException
+    
+

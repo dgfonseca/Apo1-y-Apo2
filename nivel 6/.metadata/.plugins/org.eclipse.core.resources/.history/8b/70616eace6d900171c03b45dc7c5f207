@@ -1,0 +1,578 @@
+package uniandes.cupi2.explorador.mundo;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
+
+
+
+
+
+
+/**
+ * Esta clase representa el explorador de cuevas y conoce las casillas por donde se ha movilizado el usuario.
+ */
+public class ExploradorCuevas
+{
+
+	//
+	// Enumeraciones
+	//
+
+	/**
+	 * Enumeradores para los tipos de estado.
+	 */
+	public enum EstadoJuego{
+
+		/**
+		 * Indica que el juego debe continuar. <br>
+		 * No se ha llegado al tesoro y tampoco esta donde una bomba.
+		 */
+		CONTINUA_JUEGO,
+
+		/**
+		 * Indica que el juego fue ganado porque se llego al tesoro.
+		 */
+		JUEGO_GANADO,
+
+		/**
+		 * Indica que el juego fue perdido porque llego donde estaba la bomba.
+		 */
+		JUEGO_PERDIDO_BOMBA,
+
+		/**
+		 * Indica que el juego fue perdido porque se acabaron los movimientos.
+		 */
+		JUEGO_PERDIDO_MOVIMIENTOS,
+
+
+		MOVIO_ARRIBA,
+
+		MOVIO_ARRIBA_DERECHA,
+
+		MOVIO_ARRIBA_IZQUIERDA,
+
+		MOVIO_IZQUIERDA,
+
+		MOVIO_DERECHA,
+
+		MOVIO_ABAJO,
+
+		MOVIO_ABAJO_DERECHA,
+
+		MOVIO_ABAJO_IZQUIERDA;
+
+
+	}
+	// 
+	// Atributos
+	// 
+private File juegoActual; 
+	/**
+	 * Es la matriz donde se marcan las casillas que se moviliza el jugador. <br>
+	 * Cada casilla puede estar VACIA, OBSTACULO, TESORO, BOMBA, JUGADOR O ILUMINADA.
+	 */
+	private Casilla[][] casillasExploradorCuevas;
+
+	/**
+	 * Cantidad de columnas del campo minado.
+	 */
+	private int columnas;
+
+	/**
+	 * Cantidad de filas del campo minado.
+	 */
+	private int filas;
+
+	/**
+	 * Indica si ya el juego se terminó y el resultado.
+	 */
+	private EstadoJuego estadoJuego;
+
+	/**
+	 * La cantidad de bombas que hay en el campo minado.
+	 */
+	private int cantidadBombas;
+
+	/**
+	 * Se va a usar para reiniciar el juego.
+	 */
+	private Properties estadoInicial;
+
+	/**
+	 * La cantidad de movimientos restantes.
+	 */
+	private int cantidadMovimientos;
+
+	// 
+	// Constructores
+	// 
+
+	/**
+	 * Construye un nuevo juego de Explorador cuevas con el tamaño del de la cueva y el número de bombas y tesoros especificados en el archivo de entrada. <br>
+	 * <b>post: </b> Se construyó un nuevo explorador de cuevas del tamaño y número de minas especificados en el archivo. <br>   
+	 * El tiempo de inicio se inicializó en cero.
+	 * @param archivoJuego - File, archivo en donde se encuentra el properties. No es nulo.
+	 * @throws Exception Se lanza esta excepción si hay problemas cargando el archivo.
+	 */
+	public ExploradorCuevas( File archivoJuego ) throws Exception
+	{
+		cargarInfoJuego( archivoJuego );
+
+	}
+
+	/**
+	 * Carga la información del explorador de cuevas en un objeto de tipo Properties.
+	 * @param archivoJuego File, archivo en donde se encuentra el properties. No es nulo.
+	 * @throws Exception Si hay algún problema leyendo el properties
+	 */
+	private Properties cargarInfoJuego( File archivoJuego ) throws Exception
+	{
+
+		Properties datos = new Properties( );
+		
+
+		try{
+			FileInputStream in = new FileInputStream(archivoJuego);
+		
+			datos.load(in);	
+			in.close();
+			
+		
+			
+			
+
+
+
+
+
+		}catch(Exception e){
+			
+			
+			throw new Exception("formato invalido");
+		}
+
+
+return datos;
+
+	}
+	/**
+	 * Permite reiniciar un juego
+	 */
+	public void reiniciarJuego(){
+		inicializarJuego(estadoInicial);
+	}
+
+	/**
+	 * Crea un nuevo explorador de cuevas de juego, asignando todos los valores a las casillas. <br>
+	 * <b>post: </b> El explorador de cuevas quedó inicializado, con todas las casillas con su respectivo valor, con las bombas según las posiciones del properties y<br>
+	 */
+	public void inicializarJuego(File archivoJuego )
+	{
+
+       Properties estadoInicial=cargarInfoJuego(archivoJuego);
+       cantidadMovimientos =  Integer.parseInt(estadoInicial.getProperty("explorador.movimientos"));
+       filas = Integer.parseInt(estadoInicial.getProperty("explorador.filas"));
+       columnas = estadoInicial.getProperty("explorador.fila0").split("").length;
+       
+	
+		casillasExploradorCuevas = new Casilla[filas][columnas];
+
+		for( int i = 0; i < filas; i++ )
+		{
+			String[] tipos = estadoInicial.getProperty("explorador.fila"+i).split("");
+			for( int j = 0; j <tipos.length; j++ )
+			{
+              casillasExploradorCuevas[i][j] = new Casilla(tipos[j]);
+				if(tipos[j].equals(Casilla.JUGADOR)){
+					filas=i;
+					columnas=j;
+				}
+				else if( tipos[j].equals(Casilla.TESORO)){
+					
+				}
+
+			
+
+
+
+		juegoActual=archivoJuego;
+
+
+	}
+
+	//
+	// Métodos
+	// 
+
+	/**
+	 * Retorna el número de filas del explorador de cuevas.
+	 * @return Número de filas del campo minadoexplorador de cuevas.
+	 */
+	public int darFilas( )
+	{
+		return filas;
+	}
+
+	/**
+	 * Retorna el número de columnas del explorador de cuevas.
+	 * @return Número de columnas del explorador de cuevas.
+	 */
+	public int darColumnas( )
+	{
+		return columnas;
+	}
+
+	/**
+	 * Retorna el número de bombas del explorador de cuevas.
+	 * @return Número de bombas del explorador de cuevas.
+	 */
+	public int darNumeroBombas( )
+	{
+		return cantidadBombas;
+	}
+
+
+	/**
+	 * Retorna la cantidad de movimientos restantes.
+	 * @return Cantidad de movimientos restantes.
+	 */
+	public int darCantidadMovimientos(){
+		return cantidadMovimientos;
+	}
+
+	/**
+	 * Devuelve la casilla en la posición especificada.
+	 * @param pFila Fila de la casilla.
+	 * @param pColumna Columna de la casilla.
+	 * @return Casilla en la posición especificada (pFila, pColumna).
+	 */
+	public Casilla darCasilla( int pFila, int pColumna )
+	{
+		return casillasExploradorCuevas[ pFila ][ pColumna ];
+	}
+
+
+
+
+
+
+
+
+	/**
+	 * Indica si el juego ya está terminado e informa el resultado.
+	 * @return Retorna un código indicando el estado del juego. <br>
+	 *         El resultado puede ser CONTINUA_JUEGO, si el juego no ha terminado. <br>
+	 *         Puede ser también JUEGO_GANADO o JUEGO_PERDIDO_BOMBA o JUEGO_PERDIDO_MOVIMIENTOS si el juego ya terminó y el jugador ganó o perdió, respectivamente.
+	 */
+	public EstadoJuego darEstadoJuego( )
+	{
+		return estadoJuego;
+	}
+
+
+	/**
+	 * Retorna las casillas como se deben ver durante el juego. <br>
+	 * Las posiciones que están tapadas se muestran tapadas, a menos que están marcadas. <br>
+	 * De las posiciones que están destapadas se muestra el número de minas cercanas.
+	 * @return Matriz de objetos de tipo Casilla.
+	 */
+	private Casilla[][] darCasillasEnJuego( )
+	{
+		Casilla[][] casillas = new Casilla[filas][columnas];
+
+		for( int i = 0; i < filas; i++ )
+		{
+			for( int j = 0; j < columnas; j++ )
+			{
+				if( casillasExploradorCuevas[ i ][ j ].darEstado( ) == Tipo.VACIA )
+				{
+					casillas[ i ][ j ] = new Casilla( casillasExploradorCuevas[ i ][ j ].darValor( ), Tipo.LIBRE, i, j );
+				}
+				else if( casillasExploradorCuevas[ i ][ j ].darEstado( ) == Tipo.OBSTACULO )
+				{
+					casillas[ i ][ j ] = new Casilla( casillasExploradorCuevas[ i ][ j ].darValor( ), Tipo.OBSTACULO, i, j );
+				}
+				else if(casillasExploradorCuevas[ i ][ j ].darEstado() == Tipo.JUGADOR)
+				{
+					casillas[ i ][ j ] = new Casilla( casillasExploradorCuevas[ i ][ j ].darValor( ), Tipo.JUGADOR, i, j);
+				}
+				else if(casillasExploradorCuevas[ i ][ j ].darEstado() == Tipo.ILUMINADA)
+				{
+					casillas[ i ][ j ] = new Casilla( casillasExploradorCuevas[ i ][ j ].darValor( ), Tipo.ILUMINADA, i, j);
+				}
+
+			}
+		}
+		return casillas;
+	}
+	
+	private Casilla [][] darCasillasFinJuego(){
+		
+		
+	Casilla [][] casillas = new Casilla[filas][columnas];
+	
+	for( int i = 0; i<filas; i++){
+		for(int j = 0; j<columnas; j++){
+			switch(casillasExploradorCuevas[i][j].darEstado())
+			{
+			case VACIA:
+				if(casillasExploradorCuevas[i][j].darValor()==Tipo.BOMBA)
+				{
+					casillas[i][j] = new Casilla(casillasExploradorCuevas[i][j].darValor(), Tipo.BOMBA, i, j);
+				}
+				else	if(casillasExploradorCuevas[i][j].darValor()==Tipo.VACIA)
+				{
+					casillas[i][j] = new Casilla(casillasExploradorCuevas[i][j].darValor(), Tipo.LIBRE, i, j);
+				}
+				else if(casillasExploradorCuevas[i][j].darValor()==Tipo.ILUMINADA)
+				{
+					casillas[i][j] = new Casilla(casillasExploradorCuevas[i][j].darValor(), Tipo.LIBRE, i, j);
+				
+				}
+			default:
+				if(casillasExploradorCuevas[i][j].darValor()==Tipo.OBSTACULO)
+				{
+					casillas[i][j] =new Casilla(casillasExploradorCuevas[i][j].darValor(), Tipo.OBSTACULO, i, j);
+				}
+				break;
+			
+			
+			
+			
+			
+			
+			
+			}
+			
+			
+			
+			
+			
+			
+			
+		}
+		
+		
+	}
+		
+		
+	return casillas;	
+		
+		
+	}
+
+
+
+
+
+	
+
+
+	/**
+	 * Este método sirve para saber cuantas bombas hay alrededor del jugador.
+	 * @param pI Coordenada x de la casilla.
+	 * @param pJ Coordenada y de la casilla.
+	 * @return El número de minas que hay cerca de la casilla. 0 <= número <= 8.
+	 */
+	@SuppressWarnings("unused")
+	private int calcularMinasCercanas( int pI, int pJ )
+	{
+		int bombas = 0;
+		int variable = 1;
+		for( int r = pI - variable; r <= pI + variable; r++ )
+		{
+			for( int s = pJ - variable; s <= pJ + variable; s++ )
+			{
+				if( r >= 0 && r < filas && s >= 0 && s < columnas )
+				{
+					if( casillasExploradorCuevas[ r ][ s ].darValor( ) == Tipo.BOMBA )
+					{
+						bombas++;
+					}
+				}
+			}
+		}
+		return bombas;
+	}
+
+	/**
+	 * Moviliza al explorador en la cueva. <br>
+	 * Si la casilla contenía una bomba entonces la bomba estalla y termina el juego. <br>
+	 * Si la casilla no tenía una bomba, pero estaba cerca de una, entonces la casilla correspondiente ahora deberá indicar el número de bombas cercanas Y estaria iluminada. <br>
+	 * @param pX La coordenada x de la casilla que el explorador se quiere desplazar.
+	 * @param pY La coordenada y de la casilla que el explorador se quiere desplazar.
+	 * @return Retorna un código indicando el resultado de la jugada. <br>
+	 *         El resultado puede ser CONTINUA_JUEGO, si con la jugada el juego no termina. <br>
+	 *         Puede ser también JUEGO_GANADO o JUEGO_PERDIDO_BOMBA o JUEGO_PERDIDO_MOVIMIENTOS si con la jugada el juego termina.
+	 * @throws Exception Si la en la casilla se encuentra un obstaculo o el juego ya terminó.
+	 */
+	public EstadoJuego moverse( int pX, int pY ) throws Exception
+	{
+
+		boolean termino = false;
+		for(int i = 0; i<filas; i++)
+			for(int j = 0; j<columnas&&!termino; i++)
+
+				if( casillasExploradorCuevas[ pX ][ pY ].darValor() == Tipo.JUGADOR)
+
+					if( casillasExploradorCuevas[ pX ][ pY ].darEstado( ) == Tipo.OBSTACULO )
+					{
+						throw new Exception( "Hay un obstaculo en esta casilla" );
+					}
+
+		if( estadoJuego != EstadoJuego.CONTINUA_JUEGO )
+		{
+			throw new Exception( "El juego ya terminó y no pueden realizarse más jugadas" );
+		}
+
+		EstadoJuego resultadoMovimiento = EstadoJuego.CONTINUA_JUEGO;
+
+
+		casillasExploradorCuevas[ pX ][ pY ].cambiarEstado( Tipo.LIBRE );
+		if( casillasExploradorCuevas[ pX ][ pY ].darValor( ) == Tipo.BOMBA )
+		{
+			resultadoMovimiento = EstadoJuego.JUEGO_PERDIDO_BOMBA;
+		}
+		else if(darCantidadMovimientos( ) == 0 ){
+			resultadoMovimiento = EstadoJuego.JUEGO_PERDIDO_MOVIMIENTOS;
+		}
+
+		resultadoMovimiento = verificarFinal( );
+
+
+
+		return resultadoMovimiento;
+	}
+
+	/**
+	 * Verifica si ya el juego terminó. <br>
+	 * El juego termina cuando el jugador esta en el tesoro o cuando el jugador llegua a una casilla con bomba o cuando se acaban los movimientos.
+	 * @return Retorna un código indicando el estado del juego. <br>
+	 *         El resultado puede ser CONTINUA_JUEGO, si el juego no ha terminado. <br>
+	 *         Puede ser también JUEGO_GANADO o JUEGO_PERDIDO_BOMBA o JUEGO_PERDIDO_MOVIEMIENTOS si el juego ya terminó y el jugador ganó o perdió, respectivamente.
+	 */
+	private EstadoJuego verificarFinal( )
+	{
+		boolean jugando = false;
+
+		for( int i = 0; i < filas && !jugando; i++ )
+		{
+			for( int j = 0; j < columnas && !jugando; j++ )
+			{
+				if( casillasExploradorCuevas[ i ][ j ].darValor( ) == Tipo.LIBRE && ( casillasExploradorCuevas[ i ][ j ].darEstado( ) == Tipo.ILUMINADA ) )
+				{
+					jugando = true;
+				}
+			}
+		}
+
+		EstadoJuego estadoJuego = EstadoJuego.CONTINUA_JUEGO;
+
+		if( !jugando )
+		{
+			estadoJuego = EstadoJuego.JUEGO_GANADO;
+
+			boolean finJuego = false;
+			for( int i = 0; i < filas && !finJuego; i++ )
+			{
+				for( int j = 0; j < columnas && !finJuego; j++ )
+				{
+					if( casillasExploradorCuevas[ i ][ j ].darValor( ) == Tipo.BOMBA && casillasExploradorCuevas[ i ][ j ].darEstado( ) == Tipo.LIBRE )
+					{
+						finJuego = true; 
+						estadoJuego = EstadoJuego.JUEGO_PERDIDO_BOMBA;
+					}
+					else if( cantidadMovimientos == 0 ){
+						finJuego = true;
+						estadoJuego = EstadoJuego.JUEGO_PERDIDO_MOVIMIENTOS;
+					}
+				}
+			}
+		}
+
+
+		return estadoJuego;
+
+
+	}
+
+	/**
+	 * Retorna una representación matricial de las casillas del campo minado. <br>
+	 * @return Matriz de objetos de tipo Casilla.
+	 */
+	public Casilla[][] darCasillas( )
+	{
+		Casilla[][] casillasSegunEstado;
+		if( estadoJuego == EstadoJuego.CONTINUA_JUEGO )
+		{
+			casillasSegunEstado = darCasillasEnJuego( );
+		}
+		else{
+			casillasSegunEstado = darCasillasFinJuego();
+		}
+
+		return casillasSegunEstado;
+	}
+
+
+
+
+	/**
+	 * Cuenta cuantas filas tiene más de 3 minas
+	 * pre: La matriz de Casillas ya está inicializada
+	 * @return Numero de minas en una fila
+	 */
+	public int numFilaMinas(){
+		int numMinas = 0;
+		for(int i = 0; i < filas; i++){
+			boolean termino = false;
+			for(int j = 0; j< columnas && !termino ; j++){
+				if(casillasExploradorCuevas[i][j].darValor() == Tipo.JUGADOR){
+					termino=true;
+				}
+				if(casillasExploradorCuevas[i][j].darValor() == Tipo.BOMBA){
+					numMinas++;
+
+				}
+			}
+
+		}
+		return numMinas;
+	}
+	
+	
+	
+	
+	
+
+	/**
+	 * Método 1 de extensión al ejemplo.
+	 * @return Respuesta 1.
+	 */
+	public String metodo1( )
+	{
+		return "Respuesta 1";
+	}
+
+	/**
+	 * Método 2 de extensión al ejemplo.
+	 * @return Respuesta 2.
+	 */
+	public String metodo2( )
+	{
+		return "Respuesta 2";
+	}
+
+
+
+
+
+
+
+
+
+}
+
+
+
+

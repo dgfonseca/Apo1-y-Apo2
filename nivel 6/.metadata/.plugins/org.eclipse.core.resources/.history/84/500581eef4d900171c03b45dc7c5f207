@@ -1,0 +1,76 @@
+package uniandes.cupi2.explorador.mundo;
+
+/**
+ * Esta clase representa una casilla del explorador de cuevas.
+ */
+public class Casilla {
+
+
+	/**
+	 * Enumeradores para el estado y el valor de la casilla.
+	 */
+	
+
+	// 
+	// Constantes
+	// 
+
+
+    public static final String NADA = "N";
+    
+    public static final String OBSTACULO = "O";
+    
+    public static final String JUGADOR = "J";
+    
+    public static final String BOMBA = "B";
+    
+    public static final String TESORO = "T";
+
+	// 
+	// Atributos
+	// 
+
+private String estados;
+
+
+	// 
+	// Constructores
+	// 
+
+	/**
+	 * Construye una nueva casilla con un estado y la posición horizontal y vertical en el campo minado.
+	 * @param pValor El valor almacenado en la casilla. Debe ser uno de los siguientes {LIBRE, OBSTACULO, BOMBA, TESORO}
+	 * @param pEstado Es el estado de la casilla. Debe ser uno de los siguientes. {ILUMINADA, JUGADOR } <br>
+	 *        Debe ser uno de los siguientes {CERCA_0, CERCA_1, CERCA_2, CERCA_3, CERCA_4, CERCA_5} corresponde al numero <br>
+	 *        de minas alrededor de una casilla destapada.
+	 * 
+	 */
+	public Casilla( String estadoInicial )
+	{
+		estados=estadoInicial;
+		
+	}
+	//
+	// Métodos
+	// 
+
+	/**
+	 * Retorna el valor de la casilla.
+	 * @return El valor de la casilla.
+	 */
+	public String darEstado(){
+		
+		return estados;
+		
+	}	
+	public void actualizarEstado(String nuevoEstado){
+		
+		estados=nuevoEstado;
+		
+	}
+	
+	
+	
+	
+	
+	}

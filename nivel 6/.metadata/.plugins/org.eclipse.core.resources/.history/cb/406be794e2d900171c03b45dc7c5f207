@@ -1,0 +1,109 @@
+package uniandes.cupi2.explorador.mundo;
+
+/**
+ * Esta clase representa una casilla del explorador de cuevas.
+ */
+public class Casilla {
+
+	// 
+	// Enumeraciones
+	// 
+
+	/**
+	 * Enumeradores para el estado y el valor de la casilla.
+	 */
+	
+
+	// 
+	// Constantes
+	// 
+
+	/**
+	 * Imagen para mostrar las casillas vacias.
+	 */
+
+	private static final String VACIA_IMAGEN = "./data/imagenes/casilla_vacia.png";    
+
+	/**
+	 * Imagen para mostrar la casilla con el jugador.
+	 */
+	private static final String JUGADOR_IMAGEN = "./data/imagenes/jugador.gif";    
+
+	/**
+	 * Imagen para mostrar en las casillas un obtaculo.
+	 */
+	private static final String OBSTACULO_IMAGEN = "./data/imagenes/obstaculo.png";
+
+	/**
+	 * Imagen para mostrar que en la casilla exploto la bomba.
+	 */
+	private static final String BOMBA_IMAGEN = "./data/imagenes/jugador_quemado.png";    
+
+	/**
+	 * Imagen para mostrar en la casilla el tesoro.
+	 */
+	private static final String TESORO_IMAGEN = "./data/imagenes/tesoro.gif";
+
+	/**
+	 * Imagen para mostrar una casilla iluminada.
+	 */
+	private static final String ILUMINADA_IMAGEN = "./data/imagenes/casilla_iluminada.png";  
+
+    private static final String NADA = "N";
+    
+    private static final String OBSTACULO = "O";
+    
+    private static final String JUGADOR = "J";
+    
+    private static final String BOMBA = "B";
+    
+    private static final String TESORO = "T";
+
+	// 
+	// Atributos
+	// 
+
+private String estados;
+
+
+	// 
+	// Constructores
+	// 
+
+	/**
+	 * Construye una nueva casilla con un estado y la posición horizontal y vertical en el campo minado.
+	 * @param pValor El valor almacenado en la casilla. Debe ser uno de los siguientes {LIBRE, OBSTACULO, BOMBA, TESORO}
+	 * @param pEstado Es el estado de la casilla. Debe ser uno de los siguientes. {ILUMINADA, JUGADOR } <br>
+	 *        Debe ser uno de los siguientes {CERCA_0, CERCA_1, CERCA_2, CERCA_3, CERCA_4, CERCA_5} corresponde al numero <br>
+	 *        de minas alrededor de una casilla destapada.
+	 * 
+	 */
+	public Casilla( String estadoInicial )
+	{
+		estados=estadoInicial;
+		
+	}
+	//
+	// Métodos
+	// 
+
+	/**
+	 * Retorna el valor de la casilla.
+	 * @return El valor de la casilla.
+	 */
+	public String darEstado(){
+		
+		return estados;
+		
+	}	
+	public void actualizarEstado(String nuevoEstado){
+		
+		estados=nuevoEstado;
+		
+	}
+	
+	
+	
+	
+	
+	}

@@ -1,0 +1,41 @@
+tarifa=1800
+valorEnCaja=52500
+cantidadCarros=38
+BMW;Serie 1;AMD384
+Chevrolet;Aveo;TRS778
+Fiat;Punto;CMT115
+Ford;Ka;WEM378
+Honda;Civic;SDL792
+Alfa Romeo;4C;RME586
+Jaguar;F-Type;EMW457
+Subaru;BRZ;GMR396
+Toyota;GT86;QMS567
+Mercedes;Clase S;SME327
+Nissan;GT-R;GME843
+Renault;Koleos;FDM987
+Porsche;Cayman;TMS495
+Peugeot;RCZ;FGH863
+Maserati;GranTurismo;ALS429
+Lexus;RC;TMR454
+Ford;Mustang;ROT977
+Chevrolet;Camaro;GLD332
+Audi;TTS;ROV662
+Aston Martin;Vanquish;MSD279
+Fiat;500;QMW394
+Honda;Accord;DMW965
+Hyundai;I40;YMS329
+Volvo;V90;WMS394
+Volkswagen;Beetle;SFM473
+Toyota;Prius;SNM286
+Tesla;Model S;SAG476
+Renault;Twingo;AGD767
+Renault;Laguna;MAS938
+Peugeot;208;JAJ846
+Nissan;PULSAR;MSJ238
+Mercedes;Clase A;SAH823
+Mazda;Mazda2;JAH934
+Kia;Picanto;OQW346
+Hyundai;Veloster;QWU723
+Honda;Jazz;AGD673
+Fiat;Bravo;JZV784
+Citroen;C4;LEJ836

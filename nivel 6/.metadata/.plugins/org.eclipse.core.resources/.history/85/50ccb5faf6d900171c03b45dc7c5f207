@@ -1,0 +1,92 @@
+package uniandes.cupi2.explorador.mundo;
+
+/**
+ * Esta clase representa una casilla del explorador de cuevas.
+ */
+public class Casilla {
+
+
+	/**
+	 * Enumeradores para el estado y el valor de la casilla.
+	 */
+	
+
+	// 
+	// Constantes
+	// 
+
+
+    public static final char NADA = 'N';
+    
+    public static final char OBSTACULO = 'O';
+    
+    public static final char JUGADOR = 'J';
+    
+    public static final char BOMBA = 'B';
+    
+    public static final char TESORO = 'T';
+
+    
+    
+ public static final String NADA_IMAGEN = "casilla_vacia.png";
+    
+    public static final String OBSTACULO_IMAGEN = "obstaculo.png";
+    
+    public static final String JUGADOR_IMAGEN = "jugador.gif";
+    
+    public static final String BOMBA_IMAGEN = "jugador_quemado.png";
+    
+    public static final String TESORO_IMAGEN = "tesoro.gif";
+	// 
+	// Atributos
+	// 
+
+private String estados;
+private String ruta;
+
+	// 
+	// Constructores
+	// 
+
+
+	
+	public Casilla( char pNombre, String pRuta )
+	{
+		es=nada2;
+		ruta=pRuta;
+		
+	}
+	//
+	// Métodos
+	// 
+
+	/**
+	 * Retorna el valor de la casilla.
+	 * @return El valor de la casilla.
+	 */
+	public String darEstado(){
+		
+		return estados;
+		
+	}	
+	public void actualizarEstado(String nuevoEstado){
+		
+		estados=nuevoEstado;
+		
+	}
+	public String darRuta(){
+		return ruta;
+	}
+	
+	
+	public static Casilla darCasilla(char letra)
+	{
+		Casilla actual=null;
+		if(letra == NADA)
+		{
+			actual = new Casilla(NADA, NADA_IMAGEN);
+		}
+	}
+	
+	
+	}

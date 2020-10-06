@@ -1,0 +1,151 @@
+package uniandes.cupi2.explorador.interfaz;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+
+public class PanelControles extends JPanel implements ActionListener {
+	
+	
+	
+	private static final String BOTON_ARRIBA = "Moverse Arriba";
+	private static final String BOTON_ABAJO = "Moverse Arriba";
+	private static final String BOTON_DERECHA = "Moverse Arriba";
+	private static final String BOTON_IZQUIERDA = "Moverse Arriba";
+	private static final String BOTON_DIAGONAL_ARRIBA_DERECHA = "Moverse Arriba";
+	private static final String BOTON_DIAGONAL_ARRIBA_IZQUIERDA = "Moverse Arriba";
+	private static final String BOTON_DIAGONAL_ABAJO_IZQUIERDA = "Moverse Arriba";
+	private static final String BOTON_DIAGONAL_ABAJO_DERECHA = "Moverse Arriba";
+	
+	
+	private InterfazExplorador principal;
+	private JButton botonArriba;
+	private JButton botonAbajo;
+	private JButton botonizquierda;
+	private JButton botonDerecha;
+	private JButton botonArribaDerecha;
+	private JButton botonArribaIzquierda;
+	private JButton botonAbajoDerecha;
+	private JButton botonAbajoIzquierda;
+	private JLabel nada;
+	
+	
+	
+	
+	public PanelControles(InterfazExplorador pPrincipal){
+		
+		principal=pPrincipal;
+		setLayout(new GridLayout(3, 3));
+		
+		/*nada = new JLabel("");
+		setBorder(new TitledBorder("Controles"));
+		botonArriba = new JButton();
+		botonArriba.setIcon(new ImageIcon("./data/imagenes/direccion-1.png"));
+		botonArriba.setActionCommand(BOTON_ARRIBA);
+		botonArriba.addActionListener(this);
+		
+		botonArribaDerecha = new JButton();
+		botonArribaDerecha.setIcon(new ImageIcon("./data/imagenes/direccion-2.png"));
+		botonArribaDerecha.setActionCommand(BOTON_DIAGONAL_ARRIBA_DERECHA);
+		botonArribaDerecha.addActionListener(this);
+		
+		botonArribaIzquierda = new JButton();
+		botonArribaIzquierda.setIcon(new ImageIcon("./data/imagenes/direccion-0.png"));
+		botonArribaIzquierda.setActionCommand(BOTON_DIAGONAL_ARRIBA_IZQUIERDA);
+		botonArribaIzquierda.addActionListener(this);
+		
+		botonAbajo= new JButton();
+		botonAbajo.setIcon(new ImageIcon("./data/imagenes/direccion-7.png"));
+		botonAbajo.setActionCommand(BOTON_ABAJO);
+		botonAbajo.addActionListener(this);
+		
+		botonAbajoDerecha= new JButton();
+		botonAbajoDerecha.setIcon(new ImageIcon("./data/imagenes/direccion-8.png"));
+		botonAbajoDerecha.setActionCommand(BOTON_DIAGONAL_ABAJO_DERECHA);
+		botonAbajoDerecha.addActionListener(this);
+
+		botonAbajoIzquierda= new JButton();
+		botonAbajoIzquierda.setIcon(new ImageIcon("./data/imagenes/direccion-6.png"));
+		botonAbajoIzquierda.setActionCommand(BOTON_DIAGONAL_ABAJO_IZQUIERDA);
+		botonAbajoIzquierda.addActionListener(this);
+		
+		botonizquierda= new JButton();
+		botonizquierda.setIcon(new ImageIcon("./data/imagenes/direccion-3.png"));
+		botonizquierda.setActionCommand(BOTON_IZQUIERDA);
+		botonizquierda.addActionListener(this);
+		
+		botonDerecha= new JButton();
+		botonDerecha.setIcon(new ImageIcon("./data/imagenes/direccion-5.png"));
+		botonDerecha.setActionCommand(BOTON_DERECHA);
+		botonDerecha.addActionListener(this);
+		
+		
+		add(botonArribaIzquierda);
+		add(botonArriba);
+		add(botonArribaDerecha);
+		add(botonizquierda);
+		add(nada);
+		add(botonDerecha);
+		add(botonAbajoIzquierda);
+		add(botonAbajo);
+		add(botonAbajoDerecha);
+		*/
+		
+		for(int i = 0; i < 9; i ++){
+			JButton boton = new JButton();
+			if(i != 4){
+				
+				boton.setIcon(new ImageIcon("./data/imagenes/direccion-"+ i + ".png"));
+				boton.setActionCommand(Integer.toString(i));
+				boton.addActionListener(this);
+				add(boton);
+			}
+			else{
+				add(new JLabel(""));
+			}
+		
+		}
+		
+		
+	}
+	
+	
+	
+	
+	public void actionPerformed(ActionEvent pEvent){
+		
+		
+		
+		String comando = pEvent.getActionCommand();
+		try {
+			principal.moverJugador(Integer.parseInt(comando));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+			
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+
+}

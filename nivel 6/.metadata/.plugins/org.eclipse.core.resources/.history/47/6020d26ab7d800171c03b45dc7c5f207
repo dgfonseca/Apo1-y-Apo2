@@ -1,0 +1,233 @@
+package uniandes.cupi2.explorador.interfaz;
+
+
+import java.awt.BorderLayout;
+import java.io.File;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+
+
+import uniandes.cupi2.explorador.mundo.ExploradorCuevas;
+import uniandes.cupi2.explorador.mundo.ExploradorCuevas.EstadoJuego;
+
+/**
+ * Esta es la clase principal de la interfaz del Explorador.
+ */
+@SuppressWarnings("serial")
+public class InterfazExplorador extends JFrame {
+	
+	 //
+     // Constantes
+     // 
+
+public final static int MODO_MOVERSE = 0;
+	
+    /**
+     * Ruta del archivo de donde se carga el juego.
+     */
+    public final static String RUTA_ARCHIVO = "./data/explorador.properties";
+    
+    
+    // -----------------------------------------------------------------
+    // Atributos
+    // -----------------------------------------------------------------
+
+    /**
+     * Es el modo actual de juego. Según el modo cambia la acción que se realiza cuando se hace click sobre el campo minado.
+     */
+    private int modoActual;
+
+    /**
+     * Es el campo de la cueva sobre el que se está jugando.
+     */
+    private ExploradorCuevas campoCueva;
+
+    /**
+     * Es el panel donde se muestra la barra de estado del juego.
+     */
+    private PanelMovimientos panelMovimientos;
+
+    /**
+     * Es el panel donde se muestran las opciones del programa.
+     */
+    private PanelOpciones panelOpciones;
+    
+
+    /**
+     * Es el panel donde se muestran los botones para controlar el juego.
+     */
+    private PanelControles panelControles;
+
+    /**
+     * Es el panel donde se muestra el estado actual del juego.
+     */
+    private PanelCueva panelCueva;
+
+    /**
+     * Es el panel donde se muestra la barra de estado del juego.
+     */
+    private PanelInformacion panelInformacion;
+
+//  -----------------------------------------------------------------
+    // Constructores
+    // -----------------------------------------------------------------
+
+    /**
+     * Construye la interfaz de la aplicación.
+     */
+    public InterfazExplorador( )
+    {
+
+        setTitle( "Explorador de Cuevas" );
+        setSize( 800, 700 );
+        setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        setResizable( false );
+        setLocationRelativeTo( null );
+        
+        
+        modoActual = MODO_MOVERSE;
+
+        JLabel labImagen = new JLabel( new ImageIcon( "./data/imagenes/banner.png" ) );
+        add( labImagen, BorderLayout.NORTH );
+       
+        
+        panelCueva = new PanelCueva(this);
+        add(panelCueva, BorderLayout.CENTER);
+        
+        
+
+        JPanel panelEste = new JPanel( );
+        panelEste.setLayout( new BorderLayout( ) );
+        add( panelEste, BorderLayout.EAST );
+	
+        panelControles = new PanelControles();
+        panelEste.add(panelControles, BorderLayout.CENTER);
+        
+        panelInformacion = new PanelInformacion();
+        panelEste.add(panelInformacion, BorderLayout.SOUTH);
+        
+        panelMovimientos = new PanelMovimientos();
+        panelEste.add(panelMovimientos, BorderLayout.NORTH);
+        
+        panelOpciones = new PanelOpciones(this);
+        add(panelOpciones, BorderLayout.SOUTH);
+    }
+    
+    
+    
+    /**
+     * Inicia un nuevo juego de buscaminas. El estado inicial del juego es: <br>
+     * Todas las casillas están tapadas y sin marcas. <br>
+     * Las minas se distribuyeron de manera aleatoria. <br>
+     * El tiempo de inicio del juego se inicializa en cero. <br>
+     * El modo de juego es destapar.
+     */
+    public void reiniciar( )
+    {
+        campoCueva.reiniciarJuego( );
+        panelCueva.actualizar( campoCueva );
+        panelCueva.actualizar( campoCueva );
+
+        int numeroMovimientos = campoCueva.darNumeroBombas( );
+        panelMovimientos.actualizarMovimientos( numeroMovimientos );
+
+    }
+    
+    /**
+     * Retorna el estado actual del juego.
+     * @return El estado actual del juego.
+     */
+    public EstadoJuego darEstadoJuego( )
+    {
+        return campoCueva.darEstadoJuego( );
+    }
+    /**
+	 * Muestra un diálogo para seleccionar un archivo del explorador
+	 */
+	public void mostrarDialogoCargar() {
+		
+		JFileChooser fc = new JFileChooser( "./data" );
+		fc.setDialogTitle( "Seleccionar archivo" );
+		
+		
+		int res = fc.showOpenDialog(this);
+		
+		if(res == JFileChooser.APPROVE_OPTION)
+		{
+			
+			File archivoJuego = fc.getSelectedFile();
+			try 
+			{
+				
+		        campoCueva = new ExploradorCuevas( archivoJuego );
+				
+		        panelCueva.inicializar(campoCueva.darFilas(), campoCueva.darColumnas());
+		        actualizar( );
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Error leyendo el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
+	}
+	
+	
+	
+	private void actualizar( ){
+		
+		panelCueva.actualizar(campoCueva);
+		int numeroMovimientos = campoCueva.darCantidadMovimientos();
+		
+		
+	}
+    
+    
+    
+    /**
+     * Método para la extensión 1.
+     */
+    public void reqFuncOpcion1( )
+    {
+        String resultado = campoCueva.metodo1( );
+        JOptionPane.showMessageDialog( this, resultado, "Respuesta", JOptionPane.INFORMATION_MESSAGE );
+    }
+
+    /**
+     * Método para la extensión 2.
+     */
+    public void reqFuncOpcion2( )
+    {
+        String resultado = campoCueva.metodo2( );
+        JOptionPane.showMessageDialog( this, resultado, "Respuesta", JOptionPane.INFORMATION_MESSAGE );
+    }
+ 
+    
+    /**
+     * Ejecuta la aplicación.
+     * @param pArgs Parámetros de la ejecución. No son necesarios.
+     */
+    public static void main( String[] pArgs )
+    {
+        try
+        {
+           
+            UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName( ) );
+
+            InterfazExplorador v = new InterfazExplorador( );
+            v.setVisible( true );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace( );
+        }
+    }
+
+}

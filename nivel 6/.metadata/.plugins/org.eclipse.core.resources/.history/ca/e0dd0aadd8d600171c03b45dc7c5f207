@@ -1,0 +1,14 @@
+package uniandes.cupi2.explorador.interfaz;
+
+import javax.swing.JFrame;
+
+/**
+ * Esta es la clase principal de la interfaz del Explorador.
+ */
+@SuppressWarnings("serial")
+public class InterfazExplorador extends JFrame {
+	
+	
+	
+
+}

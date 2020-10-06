@@ -1,0 +1,23 @@
+/**
+     * Enumera la cantidad de días que lleva el carro en el parqueadero.
+     */
+    private int dias;
+
+/**
+     * Calcula la cantidad de horas que debe pagar el carro según el tiempo que lleva en el parqueadero.
+     * @param pHoraSalida Hora a la que el carro sale del parqueadero. pHoraSalida >= horaIngreso.
+     * @return Tiempo que ha estado el carro en el parqueadero.
+     */
+    public int darTiempoEnParqueadero( int pHoraSalida )
+    {
+        int tiempoParqueadero = (pHoraSalida - horaIngreso + 1) + (dias * 24);
+        return tiempoParqueadero;
+    }
+    
+    /**
+     * Avanza en una unidad el contador de días.
+     */
+    public void avanzarDia( )
+    {
+        dias++;
+    }

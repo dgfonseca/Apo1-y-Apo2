@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExternalProjectImportWizard">
+		<item value="false" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\SAMSUNG\Desktop\trabajos u\nivel"/>
+			<item value="C:\Users\SAMSUNG\Desktop\trabajos u\n5 oficial\N5 terminado"/>
+			<item value="C:\Users\SAMSUNG\Desktop\trabajos u\n5\n5_sintetizador"/>
+			<item value="C:\Users\SAMSUNG\Desktop\trabajos u\n5 oficial\N5 terminado\n5\n5\n5_sintetizador"/>
+			<item value="C:\Users\SAMSUNG\Desktop\trabajos u\nivel 6\n6_exploradorCuevasNicolaider\n6_exploradorCuevas"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
+</section>

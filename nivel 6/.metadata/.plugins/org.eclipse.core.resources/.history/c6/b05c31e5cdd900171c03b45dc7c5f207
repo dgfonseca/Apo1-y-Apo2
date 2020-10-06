@@ -1,0 +1,304 @@
+package uniandes.cupi2.explorador.mundo;
+
+/**
+ * Esta clase representa una casilla del explorador de cuevas.
+ */
+public class Casilla {
+
+	// 
+	// Enumeraciones
+	// 
+
+	/**
+	 * Enumeradores para el estado y el valor de la casilla.
+	 */
+	public enum Tipo{
+
+		/**
+		 * Indica si la casilla esta libre y el jugador se puede movilizar.
+		 */
+		LIBRE,
+
+		/**
+		 * Indica si en la casilla se encuentra el jugador.
+		 */
+		JUGADOR,
+
+		/**
+		 * Indica si la casilla se encuentra iluminada por la linterna del explorador.
+		 */
+		ILUMINADA,
+
+		/**
+		 * Indica si en la casilla hay un obstaculo.
+		 */
+		OBSTACULO,
+
+		/**
+		 * Indica si en la casilla se encuentra el tesoro.
+		 */
+		TESORO,
+
+		/**
+		 * Indica si el jugador murio por una bomba.
+		 */
+		BOMBA,
+        /**
+         * Indica que la casilla no tiene minas cerca.
+         */
+        CERCA_0,
+        
+        /**
+         * Indica que la casilla tiene 1 mina cerca.
+         */
+        CERCA_1,
+        
+        /**
+         * Indica que la casilla tiene 2 minas cerca.
+         */
+        CERCA_2,
+        
+        /**
+         * Indica que la casilla tiene 3 minas cerca.
+         */
+        CERCA_3,
+        
+        /**
+         * Indica que la casilla tiene 4 minas cerca.
+         */
+        CERCA_4,
+        
+        /**
+         * Indica que la casilla no contiene nada.
+         */
+        VACIA;
+
+		
+	}
+
+	// 
+	// Constantes
+	// 
+
+	/**
+	 * Imagen para mostrar las casillas vacias.
+	 */
+
+	private static final String VACIA_IMAGEN = "./data/imagenes/casilla_vacia.png";    
+
+	/**
+	 * Imagen para mostrar la casilla con el jugador.
+	 */
+	private static final String JUGADOR_IMAGEN = "./data/imagenes/jugador.gif";    
+
+	/**
+	 * Imagen para mostrar en las casillas un obtaculo.
+	 */
+	private static final String OBSTACULO_IMAGEN = "./data/imagenes/obstaculo.png";
+
+	/**
+	 * Imagen para mostrar que en la casilla exploto la bomba.
+	 */
+	private static final String BOMBA_IMAGEN = "./data/imagenes/jugador_quemado.png";    
+
+	/**
+	 * Imagen para mostrar en la casilla el tesoro.
+	 */
+	private static final String TESORO_IMAGEN = "./data/imagenes/tesoro.gif";
+
+	/**
+	 * Imagen para mostrar una casilla iluminada.
+	 */
+	private static final String ILUMINADA_IMAGEN = "./data/imagenes/casilla_iluminada.png";  
+
+    /**
+     * Imagen que indica que tiene 1 mina cerca.
+     */
+    private static final String CERCA_1_IMAGEN = "./data/casilla_iluminada1.png";
+
+    /**
+     * Imagen que indica que tiene 2 minas cerca.
+     */
+    private static final String CERCA_2_IMAGEN = "./data/casilla_iluminada2.png";    
+
+    /**
+     * Imagen que indica que tiene 3 minas cerca.
+     */
+    private static final String CERCA_3_IMAGEN = "./data/casilla_iluminada3.png";    
+
+    /**
+     * Imagen que indica que tiene 4 minas cerca.
+     */
+    private static final String CERCA_4_IMAGEN = "./data/casilla_iluminada4.png";
+
+	// 
+	// Atributos
+	// 
+
+	/**
+	 * Es el valor de la casilla.
+	 */
+	private Tipo valor;
+
+	/**
+	 * Es el estado de la casilla.
+	 */
+	private Tipo estado;
+
+	/**
+	 * Posición horizontal de la casilla.
+	 */
+	private int fila;
+
+	/**
+	 * Posición vertical de la casilla.
+	 */
+	private int columna;
+
+
+	// 
+	// Constructores
+	// 
+
+	/**
+	 * Construye una nueva casilla con un estado y la posición horizontal y vertical en el campo minado.
+	 * @param pValor El valor almacenado en la casilla. Debe ser uno de los siguientes {LIBRE, OBSTACULO, BOMBA, TESORO}
+	 * @param pEstado Es el estado de la casilla. Debe ser uno de los siguientes. {ILUMINADA, JUGADOR } <br>
+	 *        Debe ser uno de los siguientes {CERCA_0, CERCA_1, CERCA_2, CERCA_3, CERCA_4, CERCA_5} corresponde al numero <br>
+	 *        de minas alrededor de una casilla destapada.
+	 * @param pFila Número de fila de la casilla.
+	 * @param pColumna Número de columna de la casilla.
+	 * 
+	 */
+	public Casilla( Tipo pValor, Tipo pEstado, int pFila, int pColumna )
+	{
+		valor = pValor;
+		estado = pEstado;
+		fila = pFila;
+		columna = pColumna;
+	}
+	//
+	// Métodos
+	// 
+
+	/**
+	 * Retorna el estado de la casilla.
+	 * @return El estado de la casilla.
+	 */
+	public Tipo darEstado( )
+	{
+		return estado;
+	}
+
+	/**
+	 * Retorna el valor de la casilla.
+	 * @return El valor de la casilla.
+	 */
+	public Tipo darValor( )
+	{
+		return valor;
+	}
+
+	/**
+	 * Devuelve el número de fila de la casilla.
+	 * @return La fila de la casilla.
+	 */
+	public int darFila( )
+	{
+		return fila;
+	}
+
+	/**
+	 * Devuelve el número de columna de la casilla.
+	 * @return La columna de la casilla.
+	 */
+	public int darColumna( )
+	{
+		return columna;
+	}
+
+	/**
+	 * Modifica el estado de una casilla.
+	 * @param pEstado Estado de la casilla.
+	 */
+	public void cambiarEstado( Tipo pEstado )
+	{
+		switch( pEstado )
+		{
+		case ILUMINADA :
+			estado = Tipo.ILUMINADA;
+			break;
+		case JUGADOR:
+			estado = Tipo.JUGADOR;
+			break;
+		case VACIA:
+			estado = Tipo.VACIA;
+		}
+	}
+	/**
+	 * Modifica el valor de una casilla.
+	 * @param pValor Valor de la casilla.
+	 */
+	public void cambiarValor( Tipo pValor )
+	{
+		switch( pValor )
+		{
+		case LIBRE:
+			valor = Tipo.LIBRE;
+			break;
+		case BOMBA:
+			valor = Tipo.BOMBA;
+			break;
+		case OBSTACULO:
+			valor = Tipo.OBSTACULO;
+		case TESORO:
+			valor = Tipo.TESORO;
+		}
+	}
+
+
+	/**
+	 * Retorna la imagen que debe mostrarse en la casilla según el Tipo.
+	 * @return La ruta hasta la imagen que debe mostrarse. Si no se debe mostrar ninguna imagen entonces retorna null.
+	 */
+	public String darImagen( )
+	{
+		String strimagen = null;
+
+		switch( estado )
+		{
+		
+		case LIBRE:
+			strimagen = VACIA_IMAGEN;
+			break;
+		case JUGADOR:
+			strimagen = JUGADOR_IMAGEN;
+			break;
+		case ILUMINADA:
+			strimagen = ILUMINADA_IMAGEN;
+			break;
+		case CERCA_1:
+            strimagen = Casilla.CERCA_1_IMAGEN;
+            break;
+        case CERCA_2:
+            strimagen = Casilla.CERCA_2_IMAGEN;
+            break;
+        case CERCA_3:
+            strimagen = Casilla.CERCA_3_IMAGEN;
+            break;
+        case CERCA_4:
+            strimagen = Casilla.CERCA_4_IMAGEN;
+            break;
+		case OBSTACULO:
+			strimagen = OBSTACULO_IMAGEN;
+			break;
+		case TESORO:
+			strimagen = TESORO_IMAGEN;
+			break;
+		case BOMBA:
+			strimagen = BOMBA_IMAGEN;
+			
+		}
+return strimagen;
+	}	             
+}
